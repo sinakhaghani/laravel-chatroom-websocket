@@ -23,7 +23,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function (){
-    Route::get('rooms', [ChatroomController::class, 'index']);
+    Route::get('rooms', [ChatroomController::class, 'index'])->name('room.view');
+    Route::post('rooms', [ChatroomController::class, 'createRoom'])->name('room.store');
 });
 
 require __DIR__.'/auth.php';
