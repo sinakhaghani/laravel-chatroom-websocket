@@ -20,43 +20,22 @@
 
             <ul class="overflow-auto h-[32rem]">
                 <h2 class="my-2 mb-2 ml-2 text-lg text-gray-600">Chats</h2>
-                <li>
+                <li id="list-chatroom">
+                    @foreach($rooms as $room)
                     <a
+                        href="{{$room->path()}}"
                         class="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none">
                         <img class="object-cover w-10 h-10 rounded-full"
                              src="{{asset('img/icon.png')}}" alt="username" />
                         <div class="w-full pb-2">
                             <div class="flex justify-between">
-                                <span class="block ml-2 font-semibold text-gray-600">Jhon Don</span>
-                                <span class="block ml-2 text-sm text-gray-600">25 minutes</span>
+                                <span class="block ml-2 font-semibold text-gray-600">{{$room['title']}}</span>
+                                <span class="block ml-2 text-sm text-gray-600">{{ $room['timeAgo'] }}</span>
                             </div>
-                            <span class="block ml-2 text-sm text-gray-600">bye</span>
+                            <span class="block ml-2 text-sm text-gray-600">{{$room['user']['name']}}</span>
                         </div>
                     </a>
-                    <a
-                        class="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out bg-gray-100 border-b border-gray-300 cursor-pointer focus:outline-none">
-                        <img class="object-cover w-10 h-10 rounded-full"
-                             src="{{asset('img/icon.png')}}" alt="username" />
-                        <div class="w-full pb-2">
-                            <div class="flex justify-between">
-                                <span class="block ml-2 font-semibold text-gray-600">Same</span>
-                                <span class="block ml-2 text-sm text-gray-600">50 minutes</span>
-                            </div>
-                            <span class="block ml-2 text-sm text-gray-600">Good night</span>
-                        </div>
-                    </a>
-                    <a
-                        class="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none">
-                        <img class="object-cover w-10 h-10 rounded-full"
-                             src="{{asset('img/icon.png')}}" alt="username" />
-                        <div class="w-full pb-2">
-                            <div class="flex justify-between">
-                                <span class="block ml-2 font-semibold text-gray-600">Emma</span>
-                                <span class="block ml-2 text-sm text-gray-600">6 hour</span>
-                            </div>
-                            <span class="block ml-2 text-sm text-gray-600">Good Morning</span>
-                        </div>
-                    </a>
+                    @endforeach
                 </li>
             </ul>
         </div>
@@ -82,4 +61,46 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    $(document).ready(function (){
+
+        Echo.join(`room`)
+            .here((data) => {
+                 console.log(data , '1111111111');
+
+            })
+            .joining((data) => {
+                let list = '';
+                $("#list-chatroom").empty();
+                data.rooms.forEach(function(item) {
+                    let url = window.location.origin + "/" + item.slug;
+                    list += `
+                        <a
+                    href="`+ url +`"
+                    class="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none">
+                    <img class="object-cover w-10 h-10 rounded-full"
+                         src="{{asset('img/icon.png')}}" alt="username" />
+                    <div class="w-full pb-2">
+                        <div class="flex justify-between">
+                            <span class="block ml-2 font-semibold text-gray-600">`+ item.title +`</span>
+                            <span class="block ml-2 text-sm text-gray-600">`+ item.timeAgo +`</span>
+                        </div>
+                        <span class="block ml-2 text-sm text-gray-600">`+ item.user.name +`</span>
+                    </div>
+                </a>
+                    `;
+                });
+                $("#list-chatroom").append(list);
+            })
+            .leaving((data) => {
+
+            }).listen('RoomEvent', (data) => {
+
+        });
+    });
+
+    </script>
+
 @endsection

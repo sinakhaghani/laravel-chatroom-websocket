@@ -45,11 +45,19 @@ class User extends Authenticatable
         'updated_at'        => 'datetime:Y-m-d H:i:s',
     ];
 
+    /**
+     * relation with Room model
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function rooms()
     {
         return $this->hasMany(Room::class, 'user_id');
     }
 
+    /**
+     * relation with Message model
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function messages()
     {
         return $this->hasMany(Message::class, 'user_id');

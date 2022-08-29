@@ -9,6 +9,9 @@ class RoomMembers extends Model
 {
     use HasFactory;
 
+    /**
+     * @var string[]
+     */
     protected $fillable = ['user_id', 'room_id'];
 
     /**
@@ -21,11 +24,19 @@ class RoomMembers extends Model
         'updated_at'        => 'datetime:Y-m-d H:i:s',
     ];
 
+    /**
+     * relation with Room model
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function room()
     {
         return $this->belongsTo(Room::class, 'room_id');
     }
 
+    /**
+     * relation with user model
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
