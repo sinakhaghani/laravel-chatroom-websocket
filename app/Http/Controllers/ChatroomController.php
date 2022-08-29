@@ -11,7 +11,7 @@ class ChatroomController extends Controller
 {
 
     public function index()
-    {alert()->success('create room success');
+    {
         return view('chatroom.room');
     }
 
