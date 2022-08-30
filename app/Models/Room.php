@@ -20,6 +20,7 @@ class Room extends Model
      */
     protected $appends = [
         'timeAgo',
+        'path',
     ];
 
     /**
@@ -61,7 +62,7 @@ class Room extends Model
      */
     public function members()
     {
-        return $this->hasMany(RoomMembers::class, 'room_id');
+        return $this->hasMany(RoomMembers::class, 'room_id')->latest();
     }
 
     /**
@@ -77,9 +78,9 @@ class Room extends Model
      * return url room
      * @return string
      */
-    public function path()
+    public function getPathAttribute()
     {
-        return route('room.view', $this->slug);
+        return route('room.message.view', $this->slug);
     }
 
     /**

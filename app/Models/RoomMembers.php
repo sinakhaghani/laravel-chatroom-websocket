@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class RoomMembers extends Model
 {
@@ -13,6 +14,12 @@ class RoomMembers extends Model
      * @var string[]
      */
     protected $fillable = ['user_id', 'room_id'];
+    /**
+     * @var string[]
+     */
+    protected $appends = [
+        'timeAgoJoin',
+    ];
 
     /**
      * The attributes that should be cast.
@@ -40,5 +47,14 @@ class RoomMembers extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * return time ago join
+     * @return string
+     */
+    protected function getTimeAgoJoinAttribute()
+    {
+        return Carbon::parse($this->created_at)->ago();
     }
 }
