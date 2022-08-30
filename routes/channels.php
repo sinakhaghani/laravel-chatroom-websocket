@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Message;
 use App\Models\Room;
+use App\Models\RoomMembers;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -24,5 +26,23 @@ Broadcast::channel('room', function ($user) {
     return [
         'user' => auth()->user(),
         'rooms' => $rooms,
+    ];
+});
+
+Broadcast::channel('member.{roomId}', function ($user, $roomId) {
+
+    $members = RoomMembers::with('user')->where('room_id', $roomId)->latest()->get()->toArray();
+    return [
+        'user' => auth()->user(),
+        'members' => $members,
+    ];
+});
+
+Broadcast::channel('message.{roomId}', function ($user, $roomId) {
+
+    $messages = Message::where('room_id', $roomId)->get()->toArray();
+    return [
+        'user' => auth()->user(),
+        'messages' => $messages,
     ];
 });

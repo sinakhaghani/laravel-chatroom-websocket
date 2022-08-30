@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MemberEvent;
+use App\Events\MessageEvent;
 use App\Events\RoomEvent;
+use App\Models\Message;
 use App\Models\Room;
 use App\Models\RoomMembers;
 use Illuminate\Http\Request;
@@ -33,6 +36,7 @@ class ChatroomController extends Controller
     public function messageView(Room $room)
     {
         $user = auth()->user();
+        $messages = Message::where('room_id', $room->id)->get();
         $join = RoomMembers::where('user_id', $user->id)->where('room_id', $room->id)->exists();
         if (!$join)
         {
@@ -40,7 +44,18 @@ class ChatroomController extends Controller
                 'user_id' => $user->id,
             ]);
         }
+        broadcast(new MemberEvent($room->id))->toOthers();
+        return view('chatroom.message', compact('room', 'messages'));
+    }
 
-        return view('chatroom.message', compact('room'));
+    public function messageStore(Request $request, Room $room)
+    {
+        $user = auth()->user();
+        $room->messages()->create([
+            'user_id' => $user->id,
+            'body' => $request->input('message'),
+        ]);
+        broadcast(new MessageEvent($room->id))->toOthers();
+        return redirect()->route('room.message.view', $room);
     }
 }
