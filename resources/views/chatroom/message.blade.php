@@ -43,12 +43,16 @@
                                 @if($message->user_id == auth()->user()->id)
                                     <li class="flex justify-end">
                                         <div class="relative max-w-xl px-4 py-2 text-gray-700 bg-slate-300 rounded shadow" >
+                                            <span class="block border-b border-slate-400 text-slate-400 text-center" >{{$message['user']['name']}}</span>
+                                            <br>
                                             <span class="block">{{ $message->body }}</span>
                                         </div>
                                     </li>
                                 @else
                                     <li class="flex justify-start">
                                         <div class="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow" style="">
+                                            <span class="block border-b border-slate-300 text-slate-400 text-center" >{{$message['user']['name']}}</span>
+                                            <br>
                                             <span class="block">{{ $message->body }}</span>
                                         </div>
                                     </li>
@@ -153,6 +157,8 @@
                             listMessage += `
                             <li class="flex justify-start">
                                 <div class="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow" style="">
+                                    <span class="block border-b border-slate-300 text-slate-400 text-center" >`+ item.user.name +`</span>
+                                    <br>
                                     <span class="block">`+ item.body +`</span>
                                 </div>
                             </li>
@@ -163,6 +169,8 @@
                             listMessage += `
                                 <li class="flex justify-end">
                                     <div class="relative max-w-xl px-4 py-2 text-gray-700 bg-slate-300 rounded shadow" >
+                                        <span class="block border-b border-slate-400 text-slate-400 text-center" >`+ item.user.name +`</span>
+                                        <br>
                                         <span class="block">`+ item.body +`</span>
                                     </div>
                                 </li>

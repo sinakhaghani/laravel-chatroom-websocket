@@ -49,7 +49,7 @@ class User extends Authenticatable
      * relation with Room model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function rooms()
+    public function rooms(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Room::class, 'user_id');
     }
@@ -58,8 +58,13 @@ class User extends Authenticatable
      * relation with Message model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function messages()
+    public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Message::class, 'user_id');
+    }
+
+    public function members(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(RoomMembers::class, 'user_id');
     }
 }

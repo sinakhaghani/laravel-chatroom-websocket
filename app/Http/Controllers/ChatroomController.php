@@ -28,6 +28,9 @@ class ChatroomController extends Controller
         $room = auth()->user()->rooms()->create([
             'title' => $request->input('title'),
         ]);
+        auth()->user()->members()->create([
+            'room_id' => $room->id,
+        ]);
         alert()->success('create room success');
         broadcast(new RoomEvent($room))->toOthers();
         return redirect()->route('room.view');
@@ -43,6 +46,7 @@ class ChatroomController extends Controller
             $room->members()->create([
                 'user_id' => $user->id,
             ]);
+            alert()->success('You have joined the group');
         }
         broadcast(new MemberEvent($room->id))->toOthers();
         return view('chatroom.message', compact('room', 'messages'));

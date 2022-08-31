@@ -40,7 +40,7 @@ Broadcast::channel('member.{roomId}', function ($user, $roomId) {
 
 Broadcast::channel('message.{roomId}', function ($user, $roomId) {
 
-    $messages = Message::where('room_id', $roomId)->get()->toArray();
+    $messages = Message::with('user')->where('room_id', $roomId)->get()->toArray();
     return [
         'user' => auth()->user(),
         'messages' => $messages,
