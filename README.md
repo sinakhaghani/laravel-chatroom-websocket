@@ -12,7 +12,7 @@ Install the packages by running the composer install command
  composer install
 ```
 
-Install JavaScript dependencies
+Install JavaScript dependencies and install [tailwind css](https://tailwindcss.com/docs/guides/laravel) in your project
 ```bash
  npm install
 ```
