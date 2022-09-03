@@ -16,6 +16,10 @@ use UxWeb\SweetAlert\SweetAlert;
 class ChatroomController extends Controller
 {
 
+    /**
+     * display room view
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $rooms = Room::with('user')->latest()->get();
@@ -23,6 +27,12 @@ class ChatroomController extends Controller
         return view('chatroom.room', compact('rooms'));
     }
 
+    /**
+     * create room and broadcast
+     * @param Request $request
+     * title(string): Title of the room
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function createRoom(Request $request)
     {
         $room = auth()->user()->rooms()->create([
@@ -36,6 +46,11 @@ class ChatroomController extends Controller
         return redirect()->route('room.view');
     }
 
+    /**
+     * display message view and add user to room
+     * @param Room $room
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function messageView(Room $room)
     {
         $user = auth()->user();
@@ -52,6 +67,12 @@ class ChatroomController extends Controller
         return view('chatroom.message', compact('room', 'messages'));
     }
 
+    /**
+     * create message and broadcast
+     * @param Request $request
+     * @param Room $room
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function messageStore(Request $request, Room $room)
     {
         $user = auth()->user();

@@ -68,7 +68,6 @@
 
         Echo.join(`room`)
             .here((data) => {
-                 console.log(data , '1111111111');
 
             })
             .joining((data) => {
@@ -93,11 +92,6 @@
                 });
                 $("#list-chatroom").append(list);
             })
-            .leaving((data) => {
-
-            }).listen('RoomEvent', (data) => {
-
-        });
     });
 
     </script>

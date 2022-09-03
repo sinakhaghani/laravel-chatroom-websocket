@@ -51,7 +51,7 @@ class Room extends Model
      * relation with user model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -60,7 +60,7 @@ class Room extends Model
      * relation with RoomMember model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function members()
+    public function members(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(RoomMembers::class, 'room_id')->latest();
     }
@@ -69,7 +69,7 @@ class Room extends Model
      * relation with message model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function messages()
+    public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Message::class, 'room_id');
     }

@@ -135,11 +135,6 @@
                     });
                     $("#list-members").append(list);
                 })
-                .leaving((data) => {
-
-                }).listen('RoomEvent', (data) => {
-
-            });
 
 
             Echo.join(`message.{{$room->id}}`)
@@ -179,13 +174,12 @@
 
                     });
                     $("#ul-message").append(listMessage);
-                })
-                .leaving((data) => {
-
-                }).listen('RoomEvent', (data) => {
+                });
 
             });
-        });
+
+
+
 
     </script>
 
