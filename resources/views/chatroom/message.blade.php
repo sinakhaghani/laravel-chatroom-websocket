@@ -108,6 +108,9 @@
 
         $(document).ready(function (){
 
+            /*
+            * Listen to the broadcast member and update the list
+            */
             Echo.join(`member.{{$room->id}}`)
                 .here((data) => {
 
@@ -136,7 +139,9 @@
                     $("#list-members").append(list);
                 })
 
-
+            /*
+            * Listen to the broadcast message and update the list
+            */
             Echo.join(`message.{{$room->id}}`)
                 .here((data) => {
 

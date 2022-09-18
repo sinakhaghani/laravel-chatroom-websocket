@@ -64,6 +64,9 @@
 
 <script>
 
+    /*
+    * Listen to the broadcast room and update the list
+    */
     $(document).ready(function (){
 
         Echo.join(`room`)
