@@ -70,6 +70,7 @@ class ChatroomController extends Controller
     /**
      * create message and broadcast
      * @param Request $request
+     * message(string): message of user
      * @param Room $room
      * @return \Illuminate\Http\RedirectResponse
      */
