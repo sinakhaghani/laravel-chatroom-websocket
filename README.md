@@ -32,6 +32,20 @@ PUSHER_APP_KEY=your_app_key
 PUSHER_APP_SECRET=your_app_secret
 PUSHER_APP_CLUSTER=mt1
 ```
+
+Set your PUSHER_APP_KEY in `resources/js/bootstrap.js` file
+
+```
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'your_app_key',
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    forceTLS: false,
+    disableStats: true,
+});
+```
+
 Set the `BROADCAST_DRIVER` variable in the `.env` file to `pusher`
 ```base
 BROADCAST_DRIVER=pusher
